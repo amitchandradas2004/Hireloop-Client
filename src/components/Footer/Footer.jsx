@@ -3,7 +3,7 @@ import { FaFacebookF, FaLinkedinIn, FaPinterestP } from "react-icons/fa";
 
 export default function Footer() {
   return (
-    <footer className="relative border-t border-white/10 bg-black container mx-auto">
+    <footer className="relative border-t border-white/10 bg-black ">
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-5">
         <div
@@ -16,7 +16,7 @@ export default function Footer() {
         />
       </div>
 
-      <div className="relative mx-auto  px-6 py-10">
+      <div className="relative mx-auto  px-6 py-15 container">
         <div className="grid gap-10 md:grid-cols-4">
           {/* Brand */}
           <div className="flex flex-col justify-between">

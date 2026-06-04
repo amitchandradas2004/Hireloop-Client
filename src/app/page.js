@@ -1,7 +1,9 @@
-import Image from "next/image";
+ import StatsSection from "@/components/StatsSection";
 
 export default function Home() {
   return (
-    <div>Homepage</div>
+    <main>
+      <StatsSection />
+    </main>
   );
 }
