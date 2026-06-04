@@ -54,14 +54,14 @@ export default function Navbar() {
           {/* Desktop Actions */}
           <div className="hidden items-center gap-6 md:flex">
             <Link
-              href="/login"
+              href="/SignInPage"
               className="font-medium text-violet-500 transition hover:opacity-80"
             >
               Sign In
             </Link>
 
             <Link
-              href="/SignupPage"
+              href="/SignUpPage"
               className="rounded-xl bg-violet-600 px-4 py-2 font-medium text-white transition hover:bg-violet-700"
             >
               Get Started
@@ -100,7 +100,7 @@ export default function Navbar() {
 
               <li className="border-t border-white/10 pt-5">
                 <Link
-                  href="/login"
+                  href="/SignInPage"
                   className="block text-violet-500"
                   onClick={() => setIsMenuOpen(false)}
                 >
@@ -110,7 +110,7 @@ export default function Navbar() {
 
               <li>
                 <Link
-                  href="/SignupPage"
+                  href="/SignUpPage"
                   className="block rounded-xl bg-violet-600 px-4 py-3 text-center font-medium text-white"
                   onClick={() => setIsMenuOpen(false)}
                 >
