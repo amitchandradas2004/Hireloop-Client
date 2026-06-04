@@ -14,13 +14,13 @@ export default function Navbar() {
   ];
 
   return (
-    <nav className="sticky top-0 z-50 w-full px-4 py-5">
-      <header className="mx-auto max-w-7xl">
-        <div className="flex items-center justify-between rounded-3xl border border-white/10 bg-black/70 px-6 py-4 backdrop-blur-xl">
+    <nav className="sticky top-0 z-50 w-full p-2">
+      <header className="mx-auto container">
+        <div className="flex items-center justify-between rounded-3xl border border-white/10 bg-black/70 px-6 py-2 backdrop-blur-xl">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
-            <span className="text-2xl font-bold text-white">
-              Hire<span className="text-violet-500">Nest</span>
+            <span className="text-xl lg:text-2xl font-bold text-white">
+              Hire<span className="text-violet-500">loop</span>
             </span>
           </Link>
 
@@ -62,7 +62,7 @@ export default function Navbar() {
 
             <Link
               href="/register"
-              className="rounded-xl bg-violet-600 px-6 py-3 font-medium text-white transition hover:bg-violet-700"
+              className="rounded-xl bg-violet-600 px-4 py-2 font-medium text-white transition hover:bg-violet-700"
             >
               Get Started
             </Link>
