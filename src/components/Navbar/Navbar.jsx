@@ -3,10 +3,16 @@
 import Link from "next/link";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
+import { signOut, useSession } from "@/lib/auth-client";
+import { Button } from "@heroui/react";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
+  const { data: session, isPending } = useSession();
+  const user = session?.user;
+  const hanldeSignOut = async () => {
+    await signOut();
+  };
   const navLinks = [
     { label: "Browse Jobs", href: "/jobs" },
     { label: "Companies", href: "/companies" },
@@ -14,9 +20,9 @@ export default function Navbar() {
   ];
 
   return (
-    <nav className="sticky top-0 z-50 w-full p-2">
+    <nav className="fixed top-3 z-50 w-full">
       <header className="mx-auto container">
-        <div className="flex items-center justify-between rounded-3xl border border-white/10 bg-black/70 px-6 py-2 backdrop-blur-xl">
+        <div className="flex items-center justify-between rounded-3xl border border-white/10 bg-black/30 px-6 py-2 backdrop-blur-xl">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
             <span className="text-xl lg:text-2xl font-bold text-white">
@@ -53,13 +59,25 @@ export default function Navbar() {
 
           {/* Desktop Actions */}
           <div className="hidden items-center gap-6 md:flex">
-            <Link
-              href="/SignInPage"
-              className="font-medium text-violet-500 transition hover:opacity-80"
-            >
-              Sign In
-            </Link>
-
+            {user ? (
+              <>
+                Hi, {user?.name}!
+                <Button
+                  onClick={hanldeSignOut}
+                  variant="ghost"
+                  className={"ml-1"}
+                >
+                  Sign Out
+                </Button>
+              </>
+            ) : (
+              <Link
+                href="/SignInPage"
+                className="font-medium text-violet-500 transition hover:opacity-80"
+              >
+                Sign In
+              </Link>
+            )}
             <Link
               href="/SignUpPage"
               className="rounded-xl bg-violet-600 px-4 py-2 font-medium text-white transition hover:bg-violet-700"

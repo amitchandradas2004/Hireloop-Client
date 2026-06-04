@@ -55,7 +55,7 @@ export default function SigninPage() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 dark:bg-zinc-950 px-4 py-10">
+    <div className="flex min-h-screen items-center justify-center bg-zinc-50 dark:bg-zinc-950 px-4 py-25">
       <Card className="w-full max-w-md p-6 shadow-sm border border-zinc-200 dark:border-zinc-800">
         {/* Header Container */}
         <div className="flex flex-col items-center justify-center gap-1 pb-6 border-b border-zinc-100 dark:border-zinc-800 mb-6 text-center">
@@ -150,7 +150,7 @@ export default function SigninPage() {
           <div className="text-center pt-4 border-t border-zinc-100 dark:border-zinc-800 mt-2 text-sm text-zinc-600 dark:text-zinc-400">
             New to HireLoop?{" "}
             <Link
-              href="/auth/signup"
+              href="/SignUpPage"
               className="font-medium cursor-pointer text-sm text-blue-600 dark:text-blue-400"
             >
               Create an account
