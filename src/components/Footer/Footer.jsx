@@ -1,11 +1,77 @@
+"use client";
+
 import Link from "next/link";
-import { FaFacebookF, FaLinkedinIn, FaPinterestP } from "react-icons/fa";
+import { motion } from "framer-motion";
+import {
+  FaFacebookF,
+  FaLinkedinIn,
+  FaPinterestP,
+} from "react-icons/fa";
 
 export default function Footer() {
+  const containerVariants = {
+    hidden: {},
+    show: {
+      transition: {
+        staggerChildren: 0.15,
+      },
+    },
+  };
+
+  const columnVariants = {
+    hidden: {
+      opacity: 0,
+      y: 40,
+    },
+    show: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+      },
+    },
+  };
+
+  const bottomBarVariants = {
+    hidden: {
+      opacity: 0,
+      y: 20,
+    },
+    show: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        delay: 0.4,
+        duration: 0.6,
+      },
+    },
+  };
+
+  const footerLinks = {
+    Product: [
+      "Job Discovery",
+      "AI Career Assistant",
+      "Companies",
+      "Salary Data",
+    ],
+    Navigation: [
+      "Help Center",
+      "Career Library",
+      "Contact",
+      "For Recruiters",
+    ],
+    Resources: [
+      "Blog",
+      "Newsroom",
+      "Brand Guidelines",
+      "Privacy Policy",
+    ],
+  };
+
   return (
-    <footer className="relative border-t border-white/10 bg-black ">
+    <footer className="relative overflow-hidden border-t border-white/10 bg-black text-white">
       {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-5">
+      <div className="absolute inset-0 opacity-[0.04]">
         <div
           className="h-full w-full"
           style={{
@@ -16,17 +82,47 @@ export default function Footer() {
         />
       </div>
 
-      <div className="relative mx-auto  px-6 py-15 container">
+      {/* Animated Glow */}
+      <motion.div
+        animate={{
+          opacity: [0.3, 0.6, 0.3],
+          scale: [1, 1.1, 1],
+        }}
+        transition={{
+          duration: 6,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+        className="absolute left-1/2 top-0 h-72 w-72 -translate-x-1/2 rounded-full bg-violet-600/20 blur-[120px]"
+      />
+
+      <motion.div
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true }}
+        className="relative container mx-auto px-6 py-16"
+      >
         <div className="grid gap-10 md:grid-cols-4">
           {/* Brand */}
-          <div className="flex flex-col justify-between">
+          <motion.div
+            variants={columnVariants}
+            className="flex flex-col justify-between"
+          >
             <div>
-              <Link
-                href="/"
-                className="text-2xl lg:text-3xl font-bold text-white"
+              <motion.div
+                initial={{ opacity: 0, x: -30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6 }}
               >
-                Hire<span className="text-violet-500">Nest</span>
-              </Link>
+                <Link
+                  href="/"
+                  className="text-3xl font-bold text-white"
+                >
+                  Hire<span className="text-violet-500">Nest</span>
+                </Link>
+              </motion.div>
 
               <p className="mt-8 max-w-sm leading-relaxed text-zinc-400">
                 The AI-native career platform. Built for people who take their
@@ -35,180 +131,139 @@ export default function Footer() {
             </div>
 
             <div className="mt-10 flex items-center gap-3">
-              <Link
-                href="#"
-                className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/5 text-zinc-300 transition hover:bg-violet-600 hover:text-white"
-              >
-                <FaFacebookF />
-              </Link>
-
-              <Link
-                href="#"
-                className="flex h-10 w-10 items-center justify-center rounded-xl bg-violet-600 text-white transition hover:scale-105"
-              >
-                <FaPinterestP />
-              </Link>
-
-              <Link
-                href="#"
-                className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/5 text-zinc-300 transition hover:bg-violet-600 hover:text-white"
-              >
-                <FaLinkedinIn />
-              </Link>
+              {[
+                {
+                  icon: <FaFacebookF />,
+                  href: "#",
+                },
+                {
+                  icon: <FaPinterestP />,
+                  href: "#",
+                  active: true,
+                },
+                {
+                  icon: <FaLinkedinIn />,
+                  href: "#",
+                },
+              ].map((social, index) => (
+                <motion.div
+                  key={index}
+                  whileHover={{
+                    scale: 1.15,
+                    rotate: 8,
+                  }}
+                  whileTap={{
+                    scale: 0.95,
+                  }}
+                >
+                  <Link
+                    href={social.href}
+                    className={`flex h-10 w-10 items-center justify-center rounded-xl transition ${
+                      social.active
+                        ? "bg-violet-600 text-white"
+                        : "bg-white/5 text-zinc-300 hover:bg-violet-600 hover:text-white"
+                    }`}
+                  >
+                    {social.icon}
+                  </Link>
+                </motion.div>
+              ))}
             </div>
-          </div>
+          </motion.div>
 
           {/* Product */}
-          <div>
-            <h3 className="mb-6 text-xl lg:text-[22px] font-semibold text-violet-500">
+          <motion.div variants={columnVariants}>
+            <h3 className="mb-6 text-xl font-semibold text-violet-500">
               Product
             </h3>
 
-            <ul className="space-y-4 text-xs lg:text-xl">
-              <li>
-                <Link
-                  href="/jobs"
-                  className="text-zinc-400 transition hover:text-white"
-                >
-                  Job Discovery
-                </Link>
-              </li>
-
-              <li>
-                <Link
-                  href="/ai-assistant"
-                  className="text-zinc-400 transition hover:text-white"
-                >
-                  AI Career Assistant
-                </Link>
-              </li>
-
-              <li>
-                <Link
-                  href="/companies"
-                  className="text-zinc-400 transition hover:text-white"
-                >
-                  Companies
-                </Link>
-              </li>
-
-              <li>
-                <Link
-                  href="/salary-insights"
-                  className="text-zinc-400 transition hover:text-white"
-                >
-                  Salary Data
-                </Link>
-              </li>
+            <ul className="space-y-4">
+              {footerLinks.Product.map((item) => (
+                <li key={item}>
+                  <motion.div whileHover={{ x: 6 }}>
+                    <Link
+                      href="#"
+                      className="text-zinc-400 transition hover:text-white"
+                    >
+                      {item}
+                    </Link>
+                  </motion.div>
+                </li>
+              ))}
             </ul>
-          </div>
+          </motion.div>
 
           {/* Navigation */}
-          <div>
-            <h3 className="mb-6 text-xl lg:text-[22px] font-semibold text-violet-500">
+          <motion.div variants={columnVariants}>
+            <h3 className="mb-6 text-xl font-semibold text-violet-500">
               Navigation
             </h3>
 
-            <ul className="space-y-4 text-xs lg:text-xl">
-              <li>
-                <Link
-                  href="/help-center"
-                  className="text-zinc-400 transition hover:text-white"
-                >
-                  Help Center
-                </Link>
-              </li>
-
-              <li>
-                <Link
-                  href="/career-library"
-                  className="text-zinc-400 transition hover:text-white"
-                >
-                  Career Library
-                </Link>
-              </li>
-
-              <li>
-                <Link
-                  href="/contact"
-                  className="text-zinc-400 transition hover:text-white"
-                >
-                  Contact
-                </Link>
-              </li>
-
-              <li>
-                <Link
-                  href="/recruiters"
-                  className="text-zinc-400 transition hover:text-white"
-                >
-                  For Recruiters
-                </Link>
-              </li>
+            <ul className="space-y-4">
+              {footerLinks.Navigation.map((item) => (
+                <li key={item}>
+                  <motion.div whileHover={{ x: 6 }}>
+                    <Link
+                      href="#"
+                      className="text-zinc-400 transition hover:text-white"
+                    >
+                      {item}
+                    </Link>
+                  </motion.div>
+                </li>
+              ))}
             </ul>
-          </div>
+          </motion.div>
 
           {/* Resources */}
-          <div>
-            <h3 className="mb-6 text-xl lg:text-[22px] font-semibold text-violet-500">
+          <motion.div variants={columnVariants}>
+            <h3 className="mb-6 text-xl font-semibold text-violet-500">
               Resources
             </h3>
 
-            <ul className="space-y-4 text-xs lg:text-xl">
-              <li>
-                <Link
-                  href="/blog"
-                  className="text-zinc-400 transition hover:text-white"
-                >
-                  Blog
-                </Link>
-              </li>
-
-              <li>
-                <Link
-                  href="/newsroom"
-                  className="text-zinc-400 transition hover:text-white"
-                >
-                  Newsroom
-                </Link>
-              </li>
-
-              <li>
-                <Link
-                  href="/guidelines"
-                  className="text-zinc-400 transition hover:text-white"
-                >
-                  Brand Guidelines
-                </Link>
-              </li>
-
-              <li>
-                <Link
-                  href="/privacy"
-                  className="text-zinc-400 transition hover:text-white"
-                >
-                  Privacy Policy
-                </Link>
-              </li>
+            <ul className="space-y-4">
+              {footerLinks.Resources.map((item) => (
+                <li key={item}>
+                  <motion.div whileHover={{ x: 6 }}>
+                    <Link
+                      href="#"
+                      className="text-zinc-400 transition hover:text-white"
+                    >
+                      {item}
+                    </Link>
+                  </motion.div>
+                </li>
+              ))}
             </ul>
-          </div>
+          </motion.div>
         </div>
 
         {/* Bottom Bar */}
-        <div className="mt-10 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-5 text-sm text-zinc-500 md:flex-row">
-          <p>© {new Date().getFullYear()} HireNest. All rights reserved.</p>
+        <motion.div
+          variants={bottomBarVariants}
+          className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-6 text-sm text-zinc-500 md:flex-row"
+        >
+          <p>
+            © {new Date().getFullYear()} HireNest. All rights reserved.
+          </p>
 
           <div className="flex gap-6">
-            <Link href="/terms" className="hover:text-white">
+            <Link
+              href="/terms"
+              className="transition hover:text-white"
+            >
               Terms & Conditions
             </Link>
 
-            <Link href="/privacy" className="hover:text-white">
+            <Link
+              href="/privacy"
+              className="transition hover:text-white"
+            >
               Privacy Policy
             </Link>
           </div>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     </footer>
   );
 }
