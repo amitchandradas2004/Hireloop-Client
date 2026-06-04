@@ -1,9 +1,11 @@
- import StatsSection from "@/components/StatsSection";
+ import HireLoopHero from "@/components/HireLoopHero";
+import StatsSection from "@/components/StatsSection";
 
 export default function Home() {
   return (
     <main>
-      <StatsSection />
+      <HireLoopHero/>
+      {/* <StatsSection /> */}
     </main>
   );
 }
