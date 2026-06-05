@@ -2,21 +2,20 @@
 
 import { useState } from "react";
 import {
-  Card,
   Button,
   Link,
   TextField,
   Label,
   InputGroup,
   Input,
+  Description,
+  Radio,
+  RadioGroup,
 } from "@heroui/react";
 import { Eye, EyeSlash, Person, At, ShieldKeyhole } from "@gravity-ui/icons";
 import { signUp } from "@/lib/auth-client";
 import { motion, AnimatePresence } from "framer-motion";
 
-// ─── Animation Variants ───────────────────────────────────────────────────────
-
-// Card entrance: springs up from below with a subtle scale
 const cardVariants = {
   hidden: { opacity: 0, y: 40, scale: 0.97 },
   visible: {
@@ -27,7 +26,6 @@ const cardVariants = {
   },
 };
 
-// Header fades in slightly after card
 const headerVariants = {
   hidden: { opacity: 0, y: -10 },
   visible: {
@@ -37,18 +35,13 @@ const headerVariants = {
   },
 };
 
-// Stagger container for form fields
 const formVariants = {
   hidden: {},
   visible: {
-    transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.35,
-    },
+    transition: { staggerChildren: 0.1, delayChildren: 0.35 },
   },
 };
 
-// Each form field slides up and fades in
 const fieldVariants = {
   hidden: { opacity: 0, y: 16 },
   visible: {
@@ -58,7 +51,6 @@ const fieldVariants = {
   },
 };
 
-// Status badge (error/success): expands from 0 height
 const badgeVariants = {
   hidden: { opacity: 0, scaleY: 0.85, height: 0 },
   visible: {
@@ -75,12 +67,12 @@ const badgeVariants = {
   },
 };
 
-// ─────────────────────────────────────────────────────────────────────────────
-
 export default function SignUpPage() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [role, setRole] = useState("seeker");
+
   const [isVisible, setIsVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
@@ -93,15 +85,14 @@ export default function SignUpPage() {
     setError("");
     setSuccess("");
     setIsLoading(true);
-
     try {
       const { data, error: authError } = await signUp.email({
         email,
         password,
         name,
+        role,
         callbackURL: "/",
       });
-
       if (authError) {
         setError(authError.message || "Something went wrong during signup.");
       } else {
@@ -118,32 +109,56 @@ export default function SignUpPage() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 dark:bg-zinc-950 px-4 py-25">
-      {/* Card entrance animation */}
+    <div className="relative flex min-h-screen items-center justify-center overflow-hidden px-4 py-25 bg-linear-to-br from-black-950 via-slate-950 to-black-900">
       <motion.div
-        className="w-full max-w-md"
+        className="pointer-events-none absolute -top-32 -left-32 h-120 w-120 rounded-full bg-violet-600/40 blur-[120px]"
+        animate={{ scale: [1, 1.12, 1], opacity: [0.4, 0.6, 0.4] }}
+        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+      />
+      <motion.div
+        className="pointer-events-none absolute bottom-0 right-0 h-100 w-100 rounded-full bg-indigo-500/30 blur-[100px]"
+        animate={{ scale: [1, 1.08, 1], opacity: [0.3, 0.5, 0.3] }}
+        transition={{
+          duration: 10,
+          repeat: Infinity,
+          ease: "easeInOut",
+          delay: 2,
+        }}
+      />
+      <motion.div
+        className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-75 w-75 rounded-full bg-fuchsia-600/20 blur-[80px]"
+        animate={{ scale: [1, 1.15, 1], opacity: [0.2, 0.4, 0.2] }}
+        transition={{
+          duration: 12,
+          repeat: Infinity,
+          ease: "easeInOut",
+          delay: 4,
+        }}
+      />
+
+      <motion.div
+        className="relative z-10 w-full max-w-md"
         variants={cardVariants}
         initial="hidden"
         animate="visible"
       >
-        <Card className="w-full p-6 shadow-sm border border-zinc-200 dark:border-zinc-800">
-
+        <div className="w-full rounded-2xl border border-white/20 bg-white/10 backdrop-blur-xl shadow-2xl shadow-black/40 p-6">
           {/* Header */}
           <motion.div
-            className="flex flex-col items-center justify-center gap-1 pb-6 border-b border-zinc-100 dark:border-zinc-800 mb-6 text-center"
+            className="flex flex-col items-center justify-center gap-1 pb-6 border-b border-white/10 mb-6 text-center"
             variants={headerVariants}
             initial="hidden"
             animate="visible"
           >
-            <h1 className="text-2xl font-semibold tracking-tight text-zinc-950 dark:text-zinc-50">
+            <h1 className="text-2xl font-semibold tracking-tight text-white">
               Create an account
             </h1>
-            <p className="text-sm text-zinc-600 dark:text-zinc-400">
+            <p className="text-sm text-white/60">
               Fill in the fields below to get started
             </p>
           </motion.div>
 
-          {/* Form — staggered field entrance */}
+          {/* Form */}
           <motion.form
             onSubmit={handleSignup}
             className="flex flex-col gap-5"
@@ -153,18 +168,25 @@ export default function SignUpPage() {
           >
             {/* Name Field */}
             <motion.div variants={fieldVariants}>
-              <TextField isRequired name="name" className="flex flex-col gap-1.5">
-                <Label className="text-sm font-medium text-zinc-700 dark:text-zinc-300">
+              <TextField
+                isRequired
+                name="name"
+                className="flex flex-col gap-1.5"
+              >
+                <Label className="text-sm font-medium text-white/80">
                   Name
                 </Label>
-                <InputGroup className="flex items-center gap-2 border border-zinc-200 dark:border-zinc-800 rounded-xl px-3 bg-zinc-50 dark:bg-zinc-900 focus-within:border-primary transition-colors">
-                  <Person className="text-zinc-400 pointer-events-none" size={16} />
+                <InputGroup className="flex items-center gap-2 border border-white/20 rounded-xl px-3 bg-white/10 backdrop-blur-sm focus-within:border-violet-400/60 focus-within:bg-white/15 transition-all">
+                  <Person
+                    className="text-white/40 pointer-events-none"
+                    size={16}
+                  />
                   <Input
                     type="text"
                     placeholder="Enter your full name"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className="w-full bg-transparent py-2 text-sm outline-none border-none text-zinc-900 dark:text-zinc-100"
+                    className="w-full bg-transparent py-2 text-sm outline-none border-none text-white placeholder:text-white/30"
                   />
                 </InputGroup>
               </TextField>
@@ -172,17 +194,22 @@ export default function SignUpPage() {
 
             {/* Email Field */}
             <motion.div variants={fieldVariants}>
-              <TextField isRequired name="email" type="email" className="flex flex-col gap-1.5">
-                <Label className="text-sm font-medium text-zinc-700 dark:text-zinc-300">
+              <TextField
+                isRequired
+                name="email"
+                type="email"
+                className="flex flex-col gap-1.5"
+              >
+                <Label className="text-sm font-medium text-white/80">
                   Email Address
                 </Label>
-                <InputGroup className="flex items-center gap-2 border border-zinc-200 dark:border-zinc-800 rounded-xl px-3 bg-zinc-50 dark:bg-zinc-900 focus-within:border-primary transition-colors">
-                  <At className="text-zinc-400 pointer-events-none" size={16} />
+                <InputGroup className="flex items-center gap-2 border border-white/20 rounded-xl px-3 bg-white/10 backdrop-blur-sm focus-within:border-violet-400/60 focus-within:bg-white/15 transition-all">
+                  <At className="text-white/40 pointer-events-none" size={16} />
                   <Input
                     placeholder="you@example.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="w-full bg-transparent py-2 text-sm outline-none border-none text-zinc-900 dark:text-zinc-100"
+                    className="w-full bg-transparent py-2 text-sm outline-none border-none text-white placeholder:text-white/30"
                   />
                 </InputGroup>
               </TextField>
@@ -190,22 +217,28 @@ export default function SignUpPage() {
 
             {/* Password Field */}
             <motion.div variants={fieldVariants}>
-              <TextField isRequired name="password" className="flex flex-col gap-1.5">
-                <Label className="text-sm font-medium text-zinc-700 dark:text-zinc-300">
+              <TextField
+                isRequired
+                name="password"
+                className="flex flex-col gap-1.5"
+              >
+                <Label className="text-sm font-medium text-white/80">
                   Password
                 </Label>
-                <InputGroup className="flex items-center gap-2 border border-zinc-200 dark:border-zinc-800 rounded-xl px-3 bg-zinc-50 dark:bg-zinc-900 focus-within:border-primary transition-colors">
-                  <ShieldKeyhole className="text-zinc-400 pointer-events-none" size={16} />
+                <InputGroup className="flex items-center gap-2 border border-white/20 rounded-xl px-3 bg-white/10 backdrop-blur-sm focus-within:border-violet-400/60 focus-within:bg-white/15 transition-all">
+                  <ShieldKeyhole
+                    className="text-white/40 pointer-events-none"
+                    size={16}
+                  />
                   <Input
                     type={isVisible ? "text" : "password"}
                     placeholder="Choose a password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="w-full bg-transparent py-2 text-sm outline-none border-none text-zinc-900 dark:text-zinc-100"
+                    className="w-full bg-transparent py-2 text-sm outline-none border-none text-white placeholder:text-white/30"
                   />
-                  {/* Eye icon flips on toggle */}
                   <motion.button
-                    className="focus:outline-none text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 transition"
+                    className="focus:outline-none text-white/40 hover:text-white/80 transition"
                     type="button"
                     onClick={toggleVisibility}
                     aria-label="toggle password visibility"
@@ -228,8 +261,34 @@ export default function SignUpPage() {
                 </InputGroup>
               </TextField>
             </motion.div>
-
-            {/* Status Badges — animate in/out with height expansion */}
+            {/* {role selection} */}
+            <div className="flex flex-col gap-4">
+              <Label>Select Role</Label>
+              <RadioGroup
+                onChange={(value) => setRole(value)}
+                defaultValue="seeker"
+                name="role"
+                orientation="horizontal"
+              >
+                <Radio value="seeker">
+                  <Radio.Control>
+                    <Radio.Indicator />
+                  </Radio.Control>
+                  <Radio.Content>
+                    <Label>Job Seeker</Label>
+                  </Radio.Content>
+                </Radio>
+                <Radio value="recruiter">
+                  <Radio.Control>
+                    <Radio.Indicator />
+                  </Radio.Control>
+                  <Radio.Content>
+                    <Label>Recruiter</Label>
+                  </Radio.Content>
+                </Radio>
+              </RadioGroup>
+            </div>
+            {/* Status Badges */}
             <AnimatePresence initial={false}>
               {error && (
                 <motion.div
@@ -240,12 +299,11 @@ export default function SignUpPage() {
                   exit="exit"
                   style={{ overflow: "hidden", originY: 0 }}
                 >
-                  <div className="p-3.5 text-xs font-medium rounded-xl bg-red-100/60 dark:bg-red-950/50 text-red-700 dark:text-red-400 border border-red-200 dark:border-red-900">
+                  <div className="p-3.5 text-xs font-medium rounded-xl bg-red-500/20 text-red-300 border border-red-400/30 backdrop-blur-sm">
                     <span className="font-semibold">Error:</span> {error}
                   </div>
                 </motion.div>
               )}
-
               {success && (
                 <motion.div
                   key="success"
@@ -255,14 +313,14 @@ export default function SignUpPage() {
                   exit="exit"
                   style={{ overflow: "hidden", originY: 0 }}
                 >
-                  <div className="p-3.5 text-xs font-medium rounded-xl bg-emerald-100/60 dark:bg-emerald-950/50 text-emerald-800 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-900">
+                  <div className="p-3.5 text-xs font-medium rounded-xl bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 backdrop-blur-sm">
                     <span className="font-semibold">Success:</span> {success}
                   </div>
                 </motion.div>
               )}
             </AnimatePresence>
 
-            {/* Submit Button — press feedback */}
+            {/* Submit Button */}
             <motion.div
               variants={fieldVariants}
               whileTap={{ scale: 0.97 }}
@@ -272,7 +330,7 @@ export default function SignUpPage() {
               <Button
                 type="submit"
                 color="primary"
-                className="w-full font-semibold rounded-xl text-sm h-12 bg-violet-600 hover:bg-violet-700"
+                className="w-full font-semibold rounded-xl text-sm h-12 bg-violet-600/90 hover:bg-violet-500 backdrop-blur-sm border border-violet-400/30 text-white transition-all"
                 isLoading={isLoading}
                 isDisabled={isLoading}
               >
@@ -282,18 +340,18 @@ export default function SignUpPage() {
 
             {/* Footer link */}
             <motion.div variants={fieldVariants}>
-              <div className="text-center pt-4 border-t border-zinc-100 dark:border-zinc-800 mt-2 text-sm text-zinc-600 dark:text-zinc-400">
+              <div className="text-center pt-4 border-t border-white/10 mt-2 text-sm text-white/50">
                 Already have an account?{" "}
                 <Link
                   href="/SignInPage"
-                  className="font-medium cursor-pointer text-sm text-blue-600 dark:text-blue-400"
+                  className="font-medium cursor-pointer text-sm text-violet-300 hover:text-violet-200 transition-colors"
                 >
                   Sign in instead
                 </Link>
               </div>
             </motion.div>
           </motion.form>
-        </Card>
+        </div>
       </motion.div>
     </div>
   );

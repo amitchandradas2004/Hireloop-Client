@@ -101,7 +101,7 @@ export default function HireLoopFullPage() {
         style={{ backgroundImage: "url('/globe.png')", opacity: 0.18 }}
       />
       {/* radial vignette so globe fades toward edges */}
-      <div className="pointer-events-none fixed inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_50%,transparent_30%,#080810_100%)]" />
+      <div className="pointer-events-none fixed inset-0 bg-[radial-linear(ellipse_80%_80%_at_50%_50%,transparent_30%,#080810_100%)]" />
 
       {/* ══════════════════════════════════════════════════════════════════════
           HERO SECTION
@@ -119,7 +119,7 @@ export default function HireLoopFullPage() {
           className="pointer-events-none absolute inset-0 opacity-[0.025]"
           style={{
             backgroundImage:
-              "linear-gradient(rgba(255,255,255,0.4) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.4) 1px, transparent 1px)",
+              "linear-linear(rgba(255,255,255,0.4) 1px, transparent 1px), linear-linear(90deg, rgba(255,255,255,0.4) 1px, transparent 1px)",
             backgroundSize: "56px 56px",
           }}
         />
@@ -132,7 +132,7 @@ export default function HireLoopFullPage() {
           custom={0}
           className="relative mb-10 flex items-center gap-3"
         >
-          <span className="hidden sm:block w-24 h-px bg-gradient-to-r from-transparent to-white/12" />
+          <span className="hidden sm:block w-24 h-px bg-linear-to-r from-transparent to-white/12" />
           <div className="flex items-center gap-2.5 rounded-full border border-white/10 bg-white/[0.05] px-4 py-2 backdrop-blur-md">
             <span className="text-base">💼</span>
             <span className="font-mono text-sm font-bold tracking-wider text-white">
@@ -142,7 +142,7 @@ export default function HireLoopFullPage() {
               New Jobs This Month
             </span>
           </div>
-          <span className="hidden sm:block w-24 h-px bg-gradient-to-l from-transparent to-white/12" />
+          <span className="hidden sm:block w-24 h-px bg-linear-to-l from-transparent to-white/12" />
         </motion.div>
 
         {/* Headline */}
@@ -248,7 +248,7 @@ export default function HireLoopFullPage() {
           <motion.div
             animate={{ y: [0, 7, 0] }}
             transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
-            className="w-px h-10 bg-gradient-to-b from-white/30 to-transparent"
+            className="w-px h-10 bg-linear-to-b from-white/30 to-transparent"
           />
         </motion.div>
       </section>
@@ -267,7 +267,7 @@ export default function HireLoopFullPage() {
         {/* Top fade from hero into this section */}
 
         {/* Bottom fade out */}
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#080810] to-transparent" />
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-linear-to-t from-[#080810] to-transparent" />
 
         <div className="relative z-10 mx-auto max-w-6xl">
           {/* Heading block */}
@@ -285,7 +285,7 @@ export default function HireLoopFullPage() {
 
             <h2 className="text-3xl sm:text-4xl font-bold leading-snug text-white tracking-tight">
               Assisting over{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-cyan-400">
+              <span className="text-transparent bg-clip-text bg-linear-to-r from-violet-400 to-cyan-400">
                 15,000
               </span>{" "}
               job seekers
@@ -352,7 +352,7 @@ export default function HireLoopFullPage() {
                 className={`group relative overflow-hidden rounded-3xl border border-white/8 bg-white/[0.03] p-8 backdrop-blur-xl transition-all duration-300 ${accentBorder[stat.accent]}`}
               >
                 {/* Inner card shimmer */}
-                <div className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-[radial-gradient(ellipse_at_top_right,rgba(255,255,255,0.04),transparent_60%)]" />
+                <div className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-[radial-linear(ellipse_at_top_right,rgba(255,255,255,0.04),transparent_60%)]" />
 
                 {/* Corner glow */}
                 <div
@@ -388,7 +388,7 @@ export default function HireLoopFullPage() {
                   whileInView={{ scaleX: 1 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.7, delay: 0.2 + stat.id * 0.1 }}
-                  className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/15 to-transparent origin-left"
+                  className="absolute bottom-0 left-0 right-0 h-px bg-linear-to-r from-transparent via-white/15 to-transparent origin-left"
                 />
               </motion.div>
             ))}

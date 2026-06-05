@@ -2,11 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import {
-  FaFacebookF,
-  FaLinkedinIn,
-  FaPinterestP,
-} from "react-icons/fa";
+import { FaFacebookF, FaLinkedinIn, FaPinterestP } from "react-icons/fa";
 
 export default function Footer() {
   const containerVariants = {
@@ -54,18 +50,8 @@ export default function Footer() {
       "Companies",
       "Salary Data",
     ],
-    Navigation: [
-      "Help Center",
-      "Career Library",
-      "Contact",
-      "For Recruiters",
-    ],
-    Resources: [
-      "Blog",
-      "Newsroom",
-      "Brand Guidelines",
-      "Privacy Policy",
-    ],
+    Navigation: ["Help Center", "Career Library", "Contact", "For Recruiters"],
+    Resources: ["Blog", "Newsroom", "Brand Guidelines", "Privacy Policy"],
   };
 
   return (
@@ -76,7 +62,7 @@ export default function Footer() {
           className="h-full w-full"
           style={{
             backgroundImage:
-              "radial-gradient(circle at 1px 1px, white 1px, transparent 0)",
+              "radial-linear(circle at 1px 1px, white 1px, transparent 0)",
             backgroundSize: "30px 30px",
           }}
         />
@@ -116,10 +102,7 @@ export default function Footer() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.6 }}
               >
-                <Link
-                  href="/"
-                  className="text-3xl font-bold text-white"
-                >
+                <Link href="/" className="text-3xl font-bold text-white">
                   Hire<span className="text-violet-500">Nest</span>
                 </Link>
               </motion.div>
@@ -243,22 +226,14 @@ export default function Footer() {
           variants={bottomBarVariants}
           className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-6 text-sm text-zinc-500 md:flex-row"
         >
-          <p>
-            © {new Date().getFullYear()} HireNest. All rights reserved.
-          </p>
+          <p>© {new Date().getFullYear()} HireNest. All rights reserved.</p>
 
           <div className="flex gap-6">
-            <Link
-              href="/terms"
-              className="transition hover:text-white"
-            >
+            <Link href="/terms" className="transition hover:text-white">
               Terms & Conditions
             </Link>
 
-            <Link
-              href="/privacy"
-              className="transition hover:text-white"
-            >
+            <Link href="/privacy" className="transition hover:text-white">
               Privacy Policy
             </Link>
           </div>

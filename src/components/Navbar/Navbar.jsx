@@ -10,11 +10,13 @@ import { Button } from "@heroui/react";
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const { data: session } = useSession();
+  const { data: session, isPending } = useSession();
+  console.log("Session data in Navbar:", session, "ispending:", isPending);
   const user = session?.user;
 
   const handleSignOut = async () => {
     await signOut();
+    window.location.reload();
   };
 
   const navLinks = [

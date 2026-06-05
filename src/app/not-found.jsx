@@ -18,7 +18,7 @@ export default function NotFound() {
         className="absolute inset-0 opacity-[0.04]"
         style={{
           backgroundImage:
-            "linear-gradient(#ffffff 1px, transparent 1px), linear-gradient(90deg, #ffffff 1px, transparent 1px)",
+            "linear-linear(#ffffff 1px, transparent 1px), linear-linear(90deg, #ffffff 1px, transparent 1px)",
           backgroundSize: "60px 60px",
         }}
       />
