@@ -1,34 +1,38 @@
-import {
-  LayoutSideContentLeft,
-  Bell,
-  Briefcase,
-  Envelope,
-  Gear,
-  House,
-  Magnifier,
-  Person,
-  BarsDescendingAlignLeft,
-} from "@gravity-ui/icons";
+"use client";
+import { useSession } from "@/lib/auth-client";
+import { Envelope, BarsDescendingAlignLeft } from "@gravity-ui/icons";
 import { Button, Drawer } from "@heroui/react";
 import Link from "next/link";
+import { FaHome } from "react-icons/fa";
+import { IoSettingsOutline } from "react-icons/io5";
+import { LiaBuildingSolid } from "react-icons/lia";
+import { MdOutlineDashboard } from "react-icons/md";
+import { PiHandbagSimpleBold } from "react-icons/pi";
+import { VscLayoutSidebarLeftDock } from "react-icons/vsc";
 
 export function DashboardSidebar() {
+  const { data: session, isPending } = useSession();
+  console.log("Session data in sidebar:", session, "ispending:", isPending);
+  const user = session?.user;
   const navItems = [
-    { icon: House, href: "/dashboard/recruiter", label: "Home" },
-    { icon: Magnifier, href: "/dashboard/recruiter/jobs", label: "Jobs" },
-    { icon: Bell, href: "/dashboard/recruiter/jobs/new", label: "Post A Job" },
+    { icon: FaHome, href: "/dashboard/recruiter", label: "Home" },
+    { icon: MdOutlineDashboard, href: "/dashboard", label: "Dashboard" },
+    { icon: LiaBuildingSolid, href: "/dashboard", label: "My Company" },
     {
-      icon: Briefcase,
-      href: "/dashboard/recruiter/company",
-      label: "Company Profile",
+      icon: PiHandbagSimpleBold,
+      href: "/dashboard",
+      label: "Manage Jobs",
     },
-    { icon: Envelope, href: "/messages", label: "Messages" },
-    { icon: Person, href: "/profile", label: "Profile" },
-    { icon: Gear, href: "/settings", label: "Settings" },
+    { icon: Envelope, href: "/applications", label: "Applications" },
+    { icon: IoSettingsOutline, href: "/settings", label: "Settings" },
   ];
 
   const navContent = (
     <nav className="flex flex-col gap-1">
+      <h2 className="text-xl font-bold text-left mb-2">
+        Welcome,
+        <br /> {user?.name || "User"}
+      </h2>
       {navItems.map((item) => (
         <Link
           key={item.label}
@@ -49,14 +53,18 @@ export function DashboardSidebar() {
       </aside>
       <Drawer>
         <Button className="lg:hidden mr-2" variant="secondary">
-          <BarsDescendingAlignLeft className="size-5" />
+          <VscLayoutSidebarLeftDock className="size-5 text-[#884EF4]" />
         </Button>
         <Drawer.Backdrop>
           <Drawer.Content placement="left">
             <Drawer.Dialog>
               <Drawer.CloseTrigger />
               <Drawer.Header>
-                <Drawer.Heading>Navigation</Drawer.Heading>
+                <Link href="/">
+                  <Drawer.Heading className="text-2xl font-bold">
+                    Hire<span className="text-[#884EF4]">Loop</span>
+                  </Drawer.Heading>
+                </Link>
               </Drawer.Header>
               <Drawer.Body>{navContent}</Drawer.Body>
             </Drawer.Dialog>
