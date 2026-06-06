@@ -1,7 +1,7 @@
 "use client";
 
 import { useSession } from "@/lib/auth-client";
-import { Envelope } from "@gravity-ui/icons";
+import { Envelope, Briefcase } from "@gravity-ui/icons";
 import { Button, Drawer } from "@heroui/react";
 import Link from "next/link";
 import { FaHome } from "react-icons/fa";
@@ -11,6 +11,7 @@ import { MdOutlineDashboard } from "react-icons/md";
 import { PiHandbagSimpleBold } from "react-icons/pi";
 import { VscLayoutSidebarLeftDock } from "react-icons/vsc";
 import { motion } from "framer-motion";
+import { LuCirclePlus } from "react-icons/lu";
 
 export function DashboardSidebar() {
   const { data: session, isPending } = useSession();
@@ -19,14 +20,31 @@ export function DashboardSidebar() {
 
   const navItems = [
     { icon: FaHome, href: "/dashboard/recruiter", label: "Home" },
-    { icon: MdOutlineDashboard, href: "/dashboard", label: "Dashboard" },
-    { icon: LiaBuildingSolid, href: "/dashboard", label: "My Company" },
+    {
+      icon: MdOutlineDashboard,
+      href: "/dashboard/recruiter/jobs",
+      label: "Jobs",
+    },
+    {
+      icon: LuCirclePlus,
+      href: "/dashboard/recruiter/jobs/new",
+      label: "Post a job",
+    },
+    {
+      icon: Briefcase,
+      href: "/dashboard/recruiter/company",
+      label: "Company profile",
+    },
+    {
+      icon: Envelope,
+      href: "/dashboard/recruiter/messages",
+      label: "Messages",
+    },
     {
       icon: PiHandbagSimpleBold,
-      href: "/dashboard",
+      href: "/dashboard/recruiter/jobs",
       label: "Manage Jobs",
     },
-    { icon: Envelope, href: "/applications", label: "Applications" },
     { icon: IoSettingsOutline, href: "/settings", label: "Settings" },
   ];
 

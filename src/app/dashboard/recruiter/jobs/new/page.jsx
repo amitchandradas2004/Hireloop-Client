@@ -76,7 +76,7 @@ export default function PostJobPage() {
       alert("Job posted successfully!");
       e.target.reset();
       setIsRemote(false);
-      redirect("/dashboard/recruiter");
+      redirect("/dashboard/recruiter/jobs");
     }
   };
 
