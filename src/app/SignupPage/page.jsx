@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import {
   Button,
   Link,
@@ -15,6 +14,7 @@ import {
 import { Eye, EyeSlash, Person, At, ShieldKeyhole } from "@gravity-ui/icons";
 import { signUp } from "@/lib/auth-client";
 import { motion, AnimatePresence } from "framer-motion";
+import { useState } from "react";
 
 const cardVariants = {
   hidden: { opacity: 0, y: 40, scale: 0.97 },
@@ -72,7 +72,7 @@ export default function SignUpPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("seeker");
-
+  
   const [isVisible, setIsVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
@@ -261,6 +261,7 @@ export default function SignUpPage() {
                 </InputGroup>
               </TextField>
             </motion.div>
+
             {/* {role selection} */}
             <div className="flex flex-col gap-4">
               <Label>Select Role</Label>

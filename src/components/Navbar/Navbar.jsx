@@ -11,7 +11,7 @@ export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const { data: session, isPending } = useSession();
-  console.log("Session data in Navbar:", session, "ispending:", isPending);
+  // console.log("Session data in Navbar:", session, "ispending:", isPending);
   const user = session?.user;
 
   const handleSignOut = async () => {
@@ -110,7 +110,7 @@ export default function Navbar() {
           </motion.div>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:block">
+          <div className="hidden lg:block">
             <motion.ul
               variants={navContainerVariants}
               initial="hidden"
@@ -133,7 +133,7 @@ export default function Navbar() {
           </div>
 
           {/* Desktop Actions */}
-          <div className="hidden items-center gap-4 md:flex">
+          <div className="hidden items-center gap-4 lg:flex">
             {user ? (
               <>
                 <motion.span
@@ -186,7 +186,7 @@ export default function Navbar() {
           {/* Mobile Toggle */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden"
+            className="lg:hidden"
             aria-label="Toggle Menu"
           >
             <motion.div
@@ -214,7 +214,7 @@ export default function Navbar() {
               initial="hidden"
               animate="show"
               exit="exit"
-              className="mt-4 rounded-3xl border border-white/10 bg-black/90 p-5 backdrop-blur-xl md:hidden"
+              className="mt-4 rounded-3xl border border-white/10 bg-black/90 p-5 backdrop-blur-xl lg:hidden"
             >
               <ul className="flex flex-col gap-5">
                 {navLinks.map((link) => (
