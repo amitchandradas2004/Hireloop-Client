@@ -46,9 +46,9 @@ export default function Navbar() {
   };
 
   const navLinks = [
-    { label: "Browse Jobs", href: "/jobs" },
-    { label: "Companies", href: "/companies" },
-    { label: "Pricing", href: "/pricing" },
+    { label: "Browse Jobs", href: "/dashboard/recruiter/jobs" },
+    { label: "Companies", href: "/dashboard/recruiter/company" },
+    { label: "Recruiter", href: "/dashboard/recruiter" },
   ];
 
   const navbarVariants = {
@@ -161,41 +161,47 @@ export default function Navbar() {
         <div className="hidden items-center gap-4 lg:flex">
           {user ? (
             <>
-              <motion.span
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                className="text-sm text-white"
-              >
-                Hi, {user.name}!
-              </motion.span>
+              {user ? (
+                <>
+                  <motion.span
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    className="text-sm text-white"
+                  >
+                    Hi, {user.name}!
+                  </motion.span>
 
-              <Button
-                onClick={handleSignOut}
-                variant="ghost"
-                className="text-white"
-              >
-                Sign Out
-              </Button>
+                  <Button
+                    onClick={handleSignOut}
+                    variant="ghost"
+                    className="text-white"
+                  >
+                    Sign Out
+                  </Button>
+                </>
+              ) : (
+                <motion.div
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <Link
+                    href="/SignInPage"
+                    className="font-medium text-violet-500 transition hover:opacity-80"
+                  >
+                    Sign In
+                  </Link>
+                </motion.div>
+              )}
             </>
           ) : (
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Link
-                href="/SignInPage"
-                className="font-medium text-violet-500 transition hover:opacity-80"
-              >
-                Sign In
+            <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.99 }}>
+              <Link href="/SignUpPage" onClick={() => setIsMenuOpen(false)}>
+                <Button className="block rounded-2xl bg-violet-600 font-bold   transition-all hover:bg-violet-800 w-30">
+                  Get Started
+                </Button>{" "}
               </Link>
             </motion.div>
           )}
-
-          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-            <Link
-              href="/SignUpPage"
-              className="rounded-xl bg-violet-600 px-4 py-2 font-medium text-white transition hover:bg-violet-700"
-            >
-              Get Started
-            </Link>
-          </motion.div>
         </div>
 
         {/* Mobile Toggle */}
@@ -213,14 +219,7 @@ export default function Navbar() {
             transition={{
               duration: 0.3,
             }}
-            className="
-              flex h-11 w-11 items-center justify-center
-              rounded-2xl
-              border border-white/15
-              bg-white/10
-              backdrop-blur-xl
-              shadow-lg shadow-violet-900/20
-            "
+            className="flex h-8 w-8 items-center justify-center rounded-xl border border-white/15 bg-white/10 backdrop-blur-xl shadow-lg shadow-violet-900/20"
           >
             {isMenuOpen ? (
               <X className="h-5 w-5 text-white" />
@@ -249,55 +248,24 @@ export default function Navbar() {
               initial="hidden"
               animate="show"
               exit="exit"
-              className="
-                absolute
-                right-4
-                top-17
-                z-50
-                w-[85%]
-                max-w-sm
-                rounded-3xl
-                border border-white/10
-                bg-black/90
-                p-5
-                backdrop-blur-2xl
-                shadow-2xl
-                shadow-violet-900/20
-                lg:hidden
-              "
+              className="absolute right-4 top-17 z-50 w-[85%] max-w-sm rounded-3xl border border-white/10 bg-black/90 p-5 backdrop-blur-2xl shadow-2xl shadow-violet-900/20 lg:hidden"
             >
               <ul className="flex flex-col gap-3">
                 {navLinks.map((link) => (
-                  <motion.li key={link.href} whileHover={{ x: 4 }}>
-                    <Link
-                      href={link.href}
-                      onClick={() => setIsMenuOpen(false)}
-                      className="
-                        flex items-center justify-center
-                        rounded-2xl
-                        border border-white/10
-                        bg-white/5
-                        p-2
-                        text-lg font-medium
-                        text-gray-200
-                        transition-all
-                        hover:border-violet-500/30
-                        hover:bg-violet-500/10
-                        hover:text-white
-                      "
-                    >
-                      {link.label}
+                  <motion.li key={link.href} whileHover={{ x: 2 }}>
+                    <Link href={link.href} onClick={() => setIsMenuOpen(false)}>
+                      <Button className="flex items-center justify-center rounded-2xl  w-full transition-all bg-slate-800 hover:bg-slate-700/80">
+                        {link.label}
+                      </Button>
                     </Link>
                   </motion.li>
                 ))}
-
                 <li className="my-2 border-t border-white/10" />
-
                 {user ? (
                   <li>
                     <Button
                       onClick={handleSignOut}
-                      className="w-full bg-red-500/10 text-white hover:bg-red-500/20"
+                      className="w-full bg-red-500/60 text-white hover:bg-red-500/80"
                     >
                       Sign Out
                     </Button>
@@ -307,44 +275,19 @@ export default function Navbar() {
                     <Link
                       href="/SignInPage"
                       onClick={() => setIsMenuOpen(false)}
-                      className="
-                        block
-                        rounded-2xl
-                        border border-white/10
-                        bg-white/5
-                        px-4 py-3
-                        text-center
-                        font-medium
-                        text-white
-                        transition-all
-                        hover:border-violet-500/30
-                        hover:bg-violet-500/10
-                      "
                     >
-                      Sign In
+                      <Button className="block border border-white/10 bg-white/10 hover:bg-white/15 transition-all w-full">
+                        {" "}
+                        Sign In
+                      </Button>
                     </Link>
                   </li>
                 )}
-
-                <li>
-                  <Link
-                    href="/SignUpPage"
-                    onClick={() => setIsMenuOpen(false)}
-                    className="
-                      block
-                      rounded-2xl
-                      bg-violet-600
-                      px-4 py-3
-                      text-center
-                      font-medium
-                      text-white
-                      transition-all
-                      hover:bg-violet-700
-                    "
-                  >
+                <Link href="/SignUpPage" onClick={() => setIsMenuOpen(false)}>
+                  <Button className="block rounded-2xl bg-violet-600 w-full font-medium   transition-all hover:bg-violet-800">
                     Get Started
-                  </Link>
-                </li>
+                  </Button>{" "}
+                </Link>
               </ul>
             </motion.div>
           </>
