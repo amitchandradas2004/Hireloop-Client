@@ -95,7 +95,6 @@ export default function CompanyProfile({ recruiter, recruiterCompany }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-
     const companyName = formData.get("companyName");
     const websiteUrl = formData.get("websiteUrl");
     const industry = formData.get("industry");

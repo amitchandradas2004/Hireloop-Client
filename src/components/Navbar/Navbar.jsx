@@ -46,7 +46,7 @@ export default function Navbar() {
   };
 
   const navLinks = [
-    { label: "Browse Jobs", href: "/dashboard/recruiter/jobs" },
+    { label: "Browse Jobs", href: "/jobs" },
     { label: "Companies", href: "/dashboard/recruiter/company" },
     { label: "Recruiter", href: "/dashboard/recruiter" },
   ];
