@@ -12,10 +12,15 @@ import {
 import { Eye, EyeSlash, At, ShieldKeyhole } from "@gravity-ui/icons";
 import { signIn } from "@/lib/auth-client";
 import { motion, AnimatePresence } from "framer-motion";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export default function SigninPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const redirectTo = searchParams.get("redirect") || "/";
   const [isVisible, setIsVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
@@ -32,7 +37,6 @@ export default function SigninPage() {
       const { data, error: authError } = await signIn.email({
         email,
         password,
-        callbackURL: "/",
       });
       if (authError) {
         setError(authError.message || "Invalid email or password.");
@@ -40,6 +44,7 @@ export default function SigninPage() {
         setSuccess("Signed in successfully! Redirecting...");
         setEmail("");
         setPassword("");
+        router.push(redirectTo);
       }
     } catch (err) {
       setError("An unexpected network error occurred.");
@@ -223,7 +228,7 @@ export default function SigninPage() {
               <div className="text-center pt-4 border-t border-white/10 mt-2 text-sm text-white/50">
                 New to HireLoop?{" "}
                 <Link
-                  href="/SignUpPage"
+                  href={`/SignUpPage?redirect=${redirectTo}`}
                   className="font-medium cursor-pointer text-sm text-violet-300 hover:text-violet-200 transition-colors"
                 >
                   Create an account

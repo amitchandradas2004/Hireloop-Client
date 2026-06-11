@@ -111,7 +111,7 @@ export default function JobCard({ job }) {
       <Card.Footer className="p-0 pt-4">
         <Link
           href={`/jobs/${jobId}`}
-          className="group flex justify-start items-center gap-2 bg-transparent hover:bg-zinc-800/40 p-0 text-base font-medium text-white transition-all duration-200"
+          className="group flex justify-start items-center gap-2 bg-transparent  p-0 text-base font-medium text-white transition-all duration-200 hover:text-gray-400"
           variant="light"
           disableRipple
         >

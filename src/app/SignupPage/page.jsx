@@ -15,6 +15,7 @@ import { Eye, EyeSlash, Person, At, ShieldKeyhole } from "@gravity-ui/icons";
 import { signUp } from "@/lib/auth-client";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const cardVariants = {
   hidden: { opacity: 0, y: 40, scale: 0.97 },
@@ -72,7 +73,11 @@ export default function SignUpPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("seeker");
-  
+
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const redirectTo = searchParams.get("redirect") || "/";
+
   const [isVisible, setIsVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
@@ -91,7 +96,6 @@ export default function SignUpPage() {
         password,
         name,
         role,
-        callbackURL: "/",
       });
       if (authError) {
         setError(authError.message || "Something went wrong during signup.");
@@ -100,6 +104,7 @@ export default function SignUpPage() {
         setName("");
         setEmail("");
         setPassword("");
+        router.push(redirectTo);
       }
     } catch (err) {
       setError("An unexpected network error occurred.");
@@ -344,7 +349,7 @@ export default function SignUpPage() {
               <div className="text-center pt-4 border-t border-white/10 mt-2 text-sm text-white/50">
                 Already have an account?{" "}
                 <Link
-                  href="/SignInPage"
+                  href={`/SignInPage?redirect=${redirectTo}`}
                   className="font-medium cursor-pointer text-sm text-violet-300 hover:text-violet-200 transition-colors"
                 >
                   Sign in instead
