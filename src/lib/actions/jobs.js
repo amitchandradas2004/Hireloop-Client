@@ -3,7 +3,7 @@
 import { serverMutation } from "../core/server";
 
 export const createJob = async (newJobData) => {
-  return serverMutation("api/jobs", newJobData);
+  return serverMutation("/api/jobs", newJobData);
 };
 
 // This is the original code before refactoring to use serverMutation:
