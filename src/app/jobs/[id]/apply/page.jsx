@@ -26,8 +26,7 @@ const ApplyPage = async ({ params }) => {
   const job = await getJobById(id);
   console.log(job, "Job details");
   return (
-    <div className="mt-30">
-      <h2>Apply for {job.jobTitle} </h2>
+    <div>
       <JobApply job={job} applicant={user} />
     </div>
   );
