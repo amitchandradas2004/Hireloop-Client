@@ -7,13 +7,12 @@ import { getApplicationsByApplicant } from "@/lib/api/applications";
 import Link from "next/link";
 // Importing a few Gravity UI icons to make it look clean and consistent
 import { ShieldExclamation, CircleInfo, Rocket } from "@gravity-ui/icons";
-// import { getPlanById } from '@/lib/api/plans';
+import { getPlanById } from "@/lib/api/plans";
 
 const ApplyPage = async ({ params }) => {
   const { id } = await params;
 
   const user = await getUserSession();
-  console.log("Current User Session:", user);
   if (!user) {
     redirect(`/auth/signin?redirect=/jobs/${id}/apply`);
   }
@@ -34,7 +33,7 @@ const ApplyPage = async ({ params }) => {
             seeker account to proceed.
           </p>
           <Link
-            href="/auth/signin"
+            href="/SignInPage"
             className="inline-block w-full px-4 py-2.5 bg-zinc-800 hover:bg-zinc-700 text-zinc-200 rounded-lg text-sm font-medium transition"
           >
             Switch Account
@@ -45,19 +44,21 @@ const ApplyPage = async ({ params }) => {
   }
 
   const applications = await getApplicationsByApplicant(user.id);
-
-  // const plan = await getPlanById(user?.plan || 'seeker_free')
-
+  const plan = await getPlanById(user?.plan || "seeker_free");
+  console.log(plan, "plan");
   const job = await getJobById(id);
 
   const applicationCount = applications?.length || 0;
-  // const hasReachedLimit = applicationCount >= plan.maxApplicationsPerMonth;
+  const hasReachedLimit = applicationCount >= plan.MaxApplicationsPerMonth;
 
   // Calculate application usage percentage for a beautiful dynamic progress bar
-  // const usagePercentage = Math.min((applicationCount / plan.maxApplicationsPerMonth) * 100, 100);
+  const usagePercentage = Math.min(
+    (applicationCount / plan.MaxApplicationsPerMonth) * 100,
+    100,
+  );
 
   return (
-    <div className="w-full min-h-screen bg-zinc-950 text-zinc-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="w-full min-h-screen bg-zinc-950 text-zinc-50 py-20 px-4 sm:px-6 lg:px-8">
       <div className="max-w-3xl mx-auto space-y-8">
         {/* 1. Usage & Quota Tracker Card */}
         <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 shadow-lg">
@@ -68,12 +69,9 @@ const ApplyPage = async ({ params }) => {
               </span>
               <h2 className="text-lg font-bold text-zinc-100 mt-0.5">
                 You have applied to{" "}
-                <span className="text-blue-400">
-                
-                </span>{" "}
-                out of{" "}
+                <span className="text-blue-400">{applicationCount}</span> out of{" "}
                 <span className="text-zinc-400">
-                  
+                  {plan.MaxApplicationsPerMonth}
                 </span>{" "}
                 positions
               </h2>
@@ -86,7 +84,7 @@ const ApplyPage = async ({ params }) => {
 
           {/* Progress Bar */}
           <div className="w-full bg-zinc-800 h-2.5 rounded-full overflow-hidden mb-5">
-            {/* <div
+            <div
               className={`h-full transition-all duration-500 rounded-full ${
                 hasReachedLimit
                   ? "bg-red-500"
@@ -95,7 +93,7 @@ const ApplyPage = async ({ params }) => {
                     : "bg-blue-500"
               }`}
               style={{ width: `${usagePercentage}%` }}
-            /> */}
+            />
           </div>
 
           {/* Upsell Alert Block */}

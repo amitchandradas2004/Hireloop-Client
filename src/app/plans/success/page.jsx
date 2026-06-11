@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 // Reusing Gravity UI icons to maintain your visual identity
 import { Check } from "@gravity-ui/icons";
+import { createSubscription } from "@/lib/actions/subscriptions";
 
 export default async function Success({ searchParams }) {
   // Await searchParams in Next.js 15+
@@ -20,9 +21,11 @@ export default async function Success({ searchParams }) {
   const {
     status,
     customer_details: { email: customerEmail },
+
     amount_total,
     currency,
     line_items,
+    metadata,
   } = session;
 
   // If the user hasn't paid yet, kick them back to the start
@@ -31,6 +34,15 @@ export default async function Success({ searchParams }) {
   }
 
   if (status === "complete") {
+    const subInfo = {
+      email: customerEmail,
+      planId: metadata.planId,
+    };
+
+    const result = await createSubscription(subInfo);
+
+    console.log(result, "Result");
+
     // Format the Stripe amount (which is in cents) to a readable currency string
     const formattedTotal = new Intl.NumberFormat("en-US", {
       style: "currency",
@@ -104,10 +116,10 @@ export default async function Success({ searchParams }) {
             </p>
 
             <Link
-              href="/dashboard"
+              href="/"
               className="block w-full py-3 px-4 bg-zinc-100 hover:bg-white text-zinc-900 font-semibold text-sm rounded-xl transition-colors duration-200 shadow-lg shadow-zinc-100/10 text-center"
             >
-              Go to Dashboard
+              Go to Home Page
             </Link>
           </div>
         </div>

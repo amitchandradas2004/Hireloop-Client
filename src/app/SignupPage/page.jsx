@@ -90,12 +90,15 @@ export default function SignUpPage() {
     setError("");
     setSuccess("");
     setIsLoading(true);
+
+    const plan = role === "seeker" ? "seeker_free" : "recruiter_free";
     try {
       const { data, error: authError } = await signUp.email({
         email,
         password,
         name,
         role,
+        plan,
       });
       if (authError) {
         setError(authError.message || "Something went wrong during signup.");
