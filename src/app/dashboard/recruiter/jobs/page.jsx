@@ -6,7 +6,6 @@ import { Eye, Edit2, Trash2 } from "lucide-react";
 const RecruiterJobs = async () => {
   const company = await getLoogedInRecruiterCompany();
   const jobs = (await getCompanyJobs(company._id)) || [];
-  // console.log(jobs, "Jobs");
 
   const getStatusColor = (status) => {
     switch (status?.toLowerCase()) {

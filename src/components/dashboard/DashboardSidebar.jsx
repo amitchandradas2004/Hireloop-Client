@@ -12,7 +12,8 @@ import { PiHandbagSimpleBold } from "react-icons/pi";
 import { VscLayoutSidebarLeftDock } from "react-icons/vsc";
 import { motion } from "framer-motion";
 import { LuCirclePlus } from "react-icons/lu";
-import { Bookmark, CreditCard, FileText, LayoutGrid } from "lucide-react";
+import { Bookmark, Building2, CreditCard, FileText, LayoutGrid } from "lucide-react";
+import { BsPeople } from "react-icons/bs";
 
 export function DashboardSidebar() {
   const { data: session, isPending } = useSession();
@@ -77,10 +78,38 @@ export function DashboardSidebar() {
       label: "Settings",
     },
   ];
-
+  const adminNavlinks = [
+    { icon: LayoutGrid, href: "/dashboard/admin", label: "Dashboard" },
+    {
+      icon: BsPeople,
+      href: "/dashboard/admin/saved-jobs",
+      label: "Users",
+    },
+    {
+      icon: Building2,
+      href: "/dashboard/admin/applications",
+      label: "Companies",
+    },
+    {
+      icon: Briefcase,
+      href: "/dashboard/admin/jobs",
+      label: "Jobs",
+    },
+    {
+      icon: CreditCard,
+      href: "/dashboard/admin/billing",
+      label: "Payments",
+    },
+    {
+      icon: Gear,
+      href: "/settings",
+      label: "Settings",
+    },
+  ];
   const navlinksMap = {
     seeker: seekerNavlinks,
     recruiter: recruiterNavlinks,
+    admin: adminNavlinks,
   };
 
   const navItems = navlinksMap[user?.role || "seeker"];
