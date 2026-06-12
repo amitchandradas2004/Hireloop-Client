@@ -14,8 +14,8 @@ export async function POST(request) {
 
     const planId = formData.get("plan_id");
 
-    const priceId = PLAN_PRICE_ID[planId];
-
+    const priceId = PLAN_PRICE_ID[planId.trim()];
+    console.log(priceId, "Price ID ", planId, "PlanID");
     const user = await getUserSession();
 
     // Create Checkout Sessions from body params.

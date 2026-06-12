@@ -147,6 +147,7 @@ const JobApply = ({ job, applicant }) => {
         <div className="flex items-center justify-end gap-3 mt-4 pt-4 border-t border-zinc-100 dark:border-zinc-800/50">
           <Button
             type="reset"
+            variant="danger"
             onClick={() =>
               setFormData({
                 resumeLink: "",
@@ -154,13 +155,13 @@ const JobApply = ({ job, applicant }) => {
                 additionalNotes: "",
               })
             }
-            className="px-4 py-2 text-sm font-medium text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-lg transition"
+            className="px-4 py-2 text-sm font-medium   rounded-lg transition "
           >
             Clear Form
           </Button>
           <Button
             type="submit"
-            className="px-5 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow-sm flex items-center gap-2 transition"
+            className="px-5 py-2 text-sm font-medium text-white  bg-[#401196] hover:bg-[#370e81] rounded-lg shadow-sm flex items-center gap-2 transition"
           >
             Submit Application
             <ArrowRight className="w-4 h-4" />

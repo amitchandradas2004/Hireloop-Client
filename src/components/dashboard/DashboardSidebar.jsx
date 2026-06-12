@@ -1,7 +1,7 @@
 "use client";
 
 import { useSession } from "@/lib/auth-client";
-import { Envelope, Briefcase } from "@gravity-ui/icons";
+import { Envelope, Briefcase, Magnifier, Gear } from "@gravity-ui/icons";
 import { Button, Drawer } from "@heroui/react";
 import Link from "next/link";
 import { FaHome } from "react-icons/fa";
@@ -12,13 +12,14 @@ import { PiHandbagSimpleBold } from "react-icons/pi";
 import { VscLayoutSidebarLeftDock } from "react-icons/vsc";
 import { motion } from "framer-motion";
 import { LuCirclePlus } from "react-icons/lu";
+import { Bookmark, CreditCard, FileText, LayoutGrid } from "lucide-react";
 
 export function DashboardSidebar() {
   const { data: session, isPending } = useSession();
   // console.log("Session data in sidebar:", session, "ispending:", isPending);
   const user = session?.user;
 
-  const navItems = [
+  const recruiterNavlinks = [
     { icon: FaHome, href: "/dashboard/recruiter", label: "Home" },
     {
       icon: MdOutlineDashboard,
@@ -48,6 +49,41 @@ export function DashboardSidebar() {
     { icon: IoSettingsOutline, href: "/settings", label: "Settings" },
   ];
 
+  const seekerNavlinks = [
+    { icon: LayoutGrid, href: "/dashboard/seeker", label: "Dashboard" },
+    {
+      icon: Magnifier,
+      href: "/dashboard/seeker/jobs",
+      label: "Jobs",
+    },
+    {
+      icon: Bookmark,
+      href: "/dashboard/seeker/saved-jobs",
+      label: "Saved Jobs",
+    },
+    {
+      icon: FileText,
+      href: "/dashboard/seeker/applications",
+      label: "Applications",
+    },
+    {
+      icon: CreditCard,
+      href: "/dashboard/seeker/billing",
+      label: "Billing",
+    },
+    {
+      icon: Gear,
+      href: "/settings",
+      label: "Settings",
+    },
+  ];
+
+  const navlinksMap = {
+    seeker: seekerNavlinks,
+    recruiter: recruiterNavlinks,
+  };
+
+  const navItems = navlinksMap[user?.role || "seeker"];
   // Framer Motion variants for stagger effect
   const containerVariants = {
     hidden: { opacity: 0 },

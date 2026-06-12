@@ -69,7 +69,7 @@ const ApplyPage = async ({ params }) => {
               </span>
               <h2 className="text-lg font-bold text-zinc-100 mt-0.5">
                 You have applied to{" "}
-                <span className="text-blue-400">{applicationCount}</span> out of{" "}
+                <span className="text-[#8E51FF]">{applicationCount}</span> out of{" "}
                 <span className="text-zinc-400">
                   {plan.MaxApplicationsPerMonth}
                 </span>{" "}
@@ -78,7 +78,7 @@ const ApplyPage = async ({ params }) => {
             </div>
             <span className="self-start sm:self-center px-2.5 py-1 text-xs font-medium rounded-full bg-zinc-800 text-zinc-300 border border-zinc-700">
               Current Plan:{" "}
-              <strong className="text-white font-semibold">plan.name</strong>
+              <strong className="text-white font-semibold">{plan.id}</strong>
             </span>
           </div>
 
@@ -90,7 +90,7 @@ const ApplyPage = async ({ params }) => {
                   ? "bg-red-500"
                   : usagePercentage > 66
                     ? "bg-amber-500"
-                    : "bg-blue-500"
+                    : "bg-[#8E51FF]"
               }`}
               style={{ width: `${usagePercentage}%` }}
             />

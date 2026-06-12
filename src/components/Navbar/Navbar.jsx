@@ -51,6 +51,17 @@ export default function Navbar() {
     { label: "Pricing", href: "/plans" },
   ];
 
+  const dashboardLinks = {
+    seeker: "/dashboard/seeker",
+    recruiter: "/dashboard/recruiter",
+  };
+  if (user?.email) {
+    navLinks.push({
+      label: "Dashboard",
+      href: dashboardLinks[user?.role || "seeker"],
+    });
+  }
+
   const navbarVariants = {
     hidden: {
       opacity: 0,
