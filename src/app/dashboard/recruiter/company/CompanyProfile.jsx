@@ -23,6 +23,7 @@ import {
   ChevronDown,
 } from "@gravity-ui/icons";
 import { createCompany } from "@/lib/actions/companies";
+import Image from "next/image";
 // import { createCompany } from "@/lib/actions/companies";
 
 // Layout Shared Style Constants matching your design image
@@ -58,7 +59,6 @@ export default function CompanyProfile({ recruiter, recruiterCompany }) {
       setErrors((prev) => ({ ...prev, logo: "File size exceeds 5MB limit" }));
       return;
     }
-
     setIsUploading(true);
     const formData = new FormData();
     formData.append("image", file);
@@ -122,15 +122,17 @@ export default function CompanyProfile({ recruiter, recruiterCompany }) {
       employeeCount: employeeCount || "1-10 employees",
       description,
       logo: logoUrl || (company ? company.logo : ""),
-      status: company ? company.status : "Pending", // Retains status if updating profile details
+      status: company && company.status ? company.status : "Pending", // Retains status if updating profile details
       recruiterId: recruiter?.id, // Associate company with the current recruiter
     };
     setCompany(newCompanyData);
 
-    console.log("Submitted Company Profile Data:", newCompanyData);
+    // console.log("Submitted Company Profile Data:", newCompanyData);
 
     const payload = await createCompany(newCompanyData);
     if (payload.insertedId) {
+      const savedCompany = { ...company, _id: payload.insertedId };
+      setCompany(savedCompany);
       alert("Company profile created successfully! Awaiting admin approval.");
     }
     setErrors({});
@@ -194,7 +196,9 @@ export default function CompanyProfile({ recruiter, recruiterCompany }) {
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-zinc-900 pb-6">
           <div className="flex items-center gap-4">
             {company.logo ? (
-              <img
+              <Image
+                height={100}
+                width={100}
                 src={company.logo}
                 alt={company.name}
                 className="w-16 h-16 rounded-xl object-contain bg-zinc-900 p-2 border border-zinc-800"
@@ -481,7 +485,9 @@ export default function CompanyProfile({ recruiter, recruiterCompany }) {
                     className="hidden"
                   />
                   {logoUrl ? (
-                    <img
+                    <Image
+                      height={100}
+                      width={100}
                       src={logoUrl}
                       alt="Logo Preview"
                       className="w-full h-full object-cover"
