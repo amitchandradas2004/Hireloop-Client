@@ -4,19 +4,22 @@ import React from "react";
 import { Table, Button, Badge } from "@heroui/react";
 import { CircleArrowDownFill } from "@gravity-ui/icons";
 import { motion } from "framer-motion";
-// import { updateCompany } from '@/lib/actions/companies';
+import { updateCompany } from "@/lib/actions/companies";
 
 const CompanyTable = ({ companies }) => {
-  // const handleApprove = async (id) => {
-  //     const result = await updateCompany(id, { status: 'Approved' })
-  //     if (result.modifiedCount) {
-  //         console.log(`Approved company with ID: ${id}`, result);
-  //     }
-  // };
+  const handleApprove = async (id) => {
+    const result = await updateCompany(id, { status: "Approved" });
+    if (result.modifiedCount) {
+      alert("Company status has been approved successfully!");
+    }
+  };
 
-  // const handleReject = async (id) => {
-  //     const result = await updateCompany(id, { status: 'Rejected' })
-  // };
+  const handleReject = async (id) => {
+    const result = await updateCompany(id, { status: "Rejected" });
+    if (result.modifiedCount) {
+      alert("Company status has been rejected successfully!");
+    }
+  };
 
   // Helper to format date cleanly like "Oct 12, 2023"
   const formatDate = (dateString) => {
@@ -55,7 +58,7 @@ const CompanyTable = ({ companies }) => {
   };
 
   return (
-    <motion.div 
+    <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, ease: "easeOut" }}
@@ -100,12 +103,12 @@ const CompanyTable = ({ companies }) => {
               {companies.map((company, index) => {
                 const companyId = company._id?.$oid || company._id;
                 const statusInfo = getStatusDetails(company.status);
-                
+
                 // Animation settings for row items
                 const cellAnimation = {
                   initial: { opacity: 0, y: 10 },
                   animate: { opacity: 1, y: 0 },
-                  transition: { duration: 0.3, delay: index * 0.08 }
+                  transition: { duration: 0.3, delay: index * 0.08 },
                 };
 
                 return (
@@ -115,7 +118,10 @@ const CompanyTable = ({ companies }) => {
                   >
                     {/* Company Avatar & Name */}
                     <Table.Cell className="py-4 align-middle">
-                      <motion.div {...cellAnimation} className="flex items-center gap-3">
+                      <motion.div
+                        {...cellAnimation}
+                        className="flex items-center gap-3"
+                      >
                         <div className="w-9 h-9 flex items-center justify-center bg-neutral-800 text-neutral-300 rounded font-semibold text-sm tracking-wider">
                           {getInitials(company.name)}
                         </div>
@@ -153,7 +159,10 @@ const CompanyTable = ({ companies }) => {
 
                     {/* Status Dot */}
                     <Table.Cell className="py-4 align-middle">
-                      <motion.div {...cellAnimation} className="flex items-center gap-2">
+                      <motion.div
+                        {...cellAnimation}
+                        className="flex items-center gap-2"
+                      >
                         <CircleArrowDownFill
                           className={`w-2 h-2 ${statusInfo.color}`}
                         />
@@ -176,7 +185,10 @@ const CompanyTable = ({ companies }) => {
 
                     {/* Actions Panel */}
                     <Table.Cell className="py-4 align-middle text-right">
-                      <motion.div {...cellAnimation} className="flex justify-end gap-2">
+                      <motion.div
+                        {...cellAnimation}
+                        className="flex justify-end gap-2"
+                      >
                         {company.status?.toLowerCase() !== "approved" && (
                           <Button
                             size="sm"
