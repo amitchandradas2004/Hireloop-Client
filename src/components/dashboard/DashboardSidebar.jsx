@@ -87,7 +87,7 @@ export function DashboardSidebar() {
     },
     {
       icon: Building2,
-      href: "/dashboard/admin/applications",
+      href: "/dashboard/admin/companies",
       label: "Companies",
     },
     {
