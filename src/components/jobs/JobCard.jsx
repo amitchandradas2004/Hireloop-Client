@@ -3,7 +3,7 @@ import { MapPin, Briefcase, CircleDollar, ArrowRight } from "@gravity-ui/icons";
 import Image from "next/image";
 
 export default function JobCard({ job }) {
-  console.log(job);
+  // console.log(job);
 
   // Guard clause in case the prop isn't passed or is loading
   if (!job) return null;

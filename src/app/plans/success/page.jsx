@@ -41,7 +41,7 @@ export default async function Success({ searchParams }) {
 
     const result = await createSubscription(subInfo);
 
-    console.log(result, "Result");
+    
 
     // Format the Stripe amount (which is in cents) to a readable currency string
     const formattedTotal = new Intl.NumberFormat("en-US", {

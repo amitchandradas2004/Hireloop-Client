@@ -49,7 +49,7 @@ const JobApply = ({ job, applicant }) => {
       ...formData,
     };
 
-    console.log("Submitting Application:", submissionData);
+    // console.log("Submitting Application:", submissionData);
     // Handle your API submission here
     const res = await submitApplication(submissionData);
     if (res.insertedId) {
