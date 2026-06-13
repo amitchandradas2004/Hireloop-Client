@@ -82,7 +82,7 @@ export function DashboardSidebar() {
     { icon: LayoutGrid, href: "/dashboard/admin", label: "Dashboard" },
     {
       icon: BsPeople,
-      href: "/dashboard/admin/saved-jobs",
+      href: "/dashboard/admin/users",
       label: "Users",
     },
     {
