@@ -14,7 +14,7 @@ const ApplyPage = async ({ params }) => {
 
   const user = await getUserSession();
   if (!user) {
-    redirect(`/auth/signin?redirect=/jobs/${id}/apply`);
+    redirect(`/SignInPage?redirect=/jobs/${id}/apply`);
   }
 
   // Auth Role Guard Screen
@@ -69,7 +69,8 @@ const ApplyPage = async ({ params }) => {
               </span>
               <h2 className="text-lg font-bold text-zinc-100 mt-0.5">
                 You have applied to{" "}
-                <span className="text-[#8E51FF]">{applicationCount}</span> out of{" "}
+                <span className="text-[#8E51FF]">{applicationCount}</span> out
+                of{" "}
                 <span className="text-zinc-400">
                   {plan.MaxApplicationsPerMonth}
                 </span>{" "}
