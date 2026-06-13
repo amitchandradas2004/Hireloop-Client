@@ -2,8 +2,8 @@ import { serverFetch } from "../core/server";
 
 const baseurl = process.env.SERVER_URL;
 
-export const getJobs = async () => {
-  return serverFetch("/api/jobs");
+export const getJobs = async (queryString) => {
+  return serverFetch(`/api/jobs?${queryString}`);
 };
 export const getJobById = async (jobId) => {
   return serverFetch(`/api/jobs/${jobId}`);
